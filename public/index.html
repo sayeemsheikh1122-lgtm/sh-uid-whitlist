@@ -3,55 +3,108 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>UID Portal — Obsidian Hosting</title>
+  <title>Shadow Hub — Bypass Panel</title>
   <link rel="stylesheet" href="style.css"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
 </head>
 <body>
+
+  <!-- Video Background -->
+  <div class="video-bg">
+    <video autoplay muted loop playsinline id="bgVideo">
+      <source src="https://cdn.discordapp.com/attachments/1497979406801572030/1513995400535736421/8e06560d-82db-45f6-961a-3c686ea10f53.mp4?ex=6a29c198&is=6a287018&hm=27eb546203975a5c7cd23f09e8e9d89478ff9722d89c76f1ebeec11d772ba799&" type="video/mp4"/>
+    </video>
+    <div class="video-overlay"></div>
+  </div>
+
+  <!-- Particle Canvas -->
   <canvas id="dots"></canvas>
+
   <div class="container">
 
-    <div class="header">
-      <div class="brand-icon"><i class="ti ti-user-shield"></i></div>
-      <div>
-        <div class="brand-name">UID Portal</div>
-        <div class="brand-sub">Obsidian Hosting — Free Server</div>
+    <!-- Top Badge -->
+    <div class="top-badge">
+      <i class="ti ti-shield-bolt"></i>
+      SHADOW HUB &nbsp;·&nbsp; FREE BYPASS
+    </div>
+
+    <!-- Logo -->
+    <div class="logo-area">
+      <div class="logo-ring">
+        <div class="logo-inner">
+          <i class="ti ti-ghost-2"></i>
+        </div>
+      </div>
+      <div class="logo-text">
+        <h1>Shadow Hub</h1>
+        <p>1-Day Bypass Whitelist System</p>
       </div>
     </div>
 
+    <!-- Main Card -->
     <div class="card">
-      <h2>Add User ID</h2>
-      <p class="desc">Enter a UID to register it with the free server. The request is sent instantly via API.</p>
+
+      <div class="card-header">
+        <div class="card-title">
+          <i class="ti ti-key"></i>
+          Activate Free Access
+        </div>
+        <div class="card-badge">FREE</div>
+      </div>
+
+      <p class="desc">Enter your UID below to get <strong>1 day free bypass access</strong>. Your ID will be whitelisted instantly on our server.</p>
 
       <div class="input-group">
-        <label>User ID (UID)</label>
+        <label><i class="ti ti-fingerprint"></i> Your UID</label>
         <div class="input-wrap">
-          <i class="ti ti-fingerprint input-icon"></i>
-          <input id="uidInput" type="text" placeholder="e.g. 11111111" maxlength="32" autocomplete="off"/>
+          <input id="uidInput" type="text" placeholder="Paste your UID here..." maxlength="64" autocomplete="off"/>
+          <button class="paste-btn" onclick="pasteUID()" title="Paste">
+            <i class="ti ti-clipboard"></i>
+          </button>
         </div>
       </div>
 
       <button id="addBtn" onclick="addUID()">
-        <i class="ti ti-send"></i>
-        <span id="btnText">Add UID</span>
+        <i class="ti ti-bolt"></i>
+        <span id="btnText">Activate Bypass</span>
       </button>
 
       <div id="resultBox" class="result hidden">
         <i id="resultIcon" class="ti"></i>
-        <span id="resultMsg"></span>
+        <div>
+          <div id="resultMsg"></div>
+          <div id="resultSub" class="result-sub"></div>
+        </div>
+      </div>
+
+      <!-- Info Row -->
+      <div class="info-row">
+        <div class="info-item">
+          <i class="ti ti-clock"></i>
+          <span>1 Day Access</span>
+        </div>
+        <div class="info-item">
+          <i class="ti ti-bolt"></i>
+          <span>Instant Activate</span>
+        </div>
+        <div class="info-item">
+          <i class="ti ti-shield-check"></i>
+          <span>Free Forever</span>
+        </div>
       </div>
     </div>
 
+    <!-- Stats -->
     <div class="stats">
       <div class="stat-card">
         <div class="stat-num" id="totalCount">0</div>
-        <div class="stat-lbl"><i class="ti ti-send"></i> Total Sent</div>
+        <div class="stat-lbl"><i class="ti ti-send"></i> Requests</div>
       </div>
       <div class="stat-card">
         <div class="stat-num green" id="successCount">0</div>
-        <div class="stat-lbl"><i class="ti ti-circle-check"></i> Success</div>
+        <div class="stat-lbl"><i class="ti ti-circle-check"></i> Activated</div>
       </div>
       <div class="stat-card">
         <div class="stat-num red" id="failCount">0</div>
@@ -59,18 +112,20 @@
       </div>
     </div>
 
+    <!-- History -->
     <div class="card" id="historyCard" style="display:none;">
       <div class="history-header">
-        <span><i class="ti ti-history"></i> Recent Activity</span>
-        <button class="clear-btn" onclick="clearHistory()">Clear all</button>
+        <span><i class="ti ti-history"></i> Recent Activations</span>
+        <button class="clear-btn" onclick="clearHistory()">Clear</button>
       </div>
       <div id="historyList"></div>
     </div>
 
     <footer>
-      Powered by <strong>Obsidian Hosting</strong> &nbsp;·&nbsp; API: <code>/api/free/add_uid</code>
+      <i class="ti ti-ghost-2"></i> Shadow Hub &nbsp;·&nbsp; Powered by Obsidian Hosting
     </footer>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
