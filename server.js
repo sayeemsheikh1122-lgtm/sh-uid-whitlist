@@ -4,15 +4,10 @@ const path    = require('path');
 const app  = express();
 const PORT = process.env.PORT || 3000;
 
-// Parse JSON body
 app.use(express.json());
-
-// Serve static frontend files
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ── PROXY ROUTE ────────────────────────────────────────
-// Browser call: POST /proxy/add_uid
-// Server forwards to HTTP API (no Mixed Content issue)
 app.post('/proxy/add_uid', async (req, res) => {
   const TARGET = 'http://cloud.obsidianhosting.xyz:2091/api/free/add_uid';
   try {
@@ -29,11 +24,39 @@ app.post('/proxy/add_uid', async (req, res) => {
   }
 });
 
-// Catch-all: return index.html for any unknown route
+// ── SELF PING HEALTH CHECK ─────────────────────────────
+app.get('/ping', (req, res) => {
+  res.status(200).send('pong');
+});
+
+// ── SELF PING LOOP ─────────────────────────────────────
+// Render free tier sleeps after 15 min inactivity
+// Ping every 10 min to keep it awake
+const RENDER_URL = process.env.RENDER_EXTERNAL_URL || null;
+
+function selfPing() {
+  if (!RENDER_URL) {
+    console.log('[ping] RENDER_EXTERNAL_URL not set, skipping self-ping.');
+    return;
+  }
+  const url = `${RENDER_URL}/ping`;
+  fetch(url)
+    .then(r => console.log(`[ping] ${new Date().toISOString()} → ${r.status}`))
+    .catch(e => console.error('[ping] error:', e.message));
+}
+
+// Start pinging after 1 min delay, then every 10 min
+setTimeout(() => {
+  selfPing();
+  setInterval(selfPing, 10 * 60 * 1000);
+}, 60 * 1000);
+
+// Catch-all
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.listen(PORT, () => {
   console.log(`UID Portal running on port ${PORT}`);
+  console.log(`Self-ping URL: ${RENDER_URL || '(set RENDER_EXTERNAL_URL)'}/ping`);
 });
