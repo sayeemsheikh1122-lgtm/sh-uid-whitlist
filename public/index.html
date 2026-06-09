@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>UID Portal — Obsidian Hosting</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+</head>
+<body>
+  <canvas id="dots"></canvas>
+  <div class="container">
+
+    <div class="header">
+      <div class="brand-icon"><i class="ti ti-user-shield"></i></div>
+      <div>
+        <div class="brand-name">UID Portal</div>
+        <div class="brand-sub">Obsidian Hosting — Free Server</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Add User ID</h2>
+      <p class="desc">Enter a UID to register it with the free server. The request is sent instantly via API.</p>
+
+      <div class="input-group">
+        <label>User ID (UID)</label>
+        <div class="input-wrap">
+          <i class="ti ti-fingerprint input-icon"></i>
+          <input id="uidInput" type="text" placeholder="e.g. 11111111" maxlength="32" autocomplete="off"/>
+        </div>
+      </div>
+
+      <button id="addBtn" onclick="addUID()">
+        <i class="ti ti-send"></i>
+        <span id="btnText">Add UID</span>
+      </button>
+
+      <div id="resultBox" class="result hidden">
+        <i id="resultIcon" class="ti"></i>
+        <span id="resultMsg"></span>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-num" id="totalCount">0</div>
+        <div class="stat-lbl"><i class="ti ti-send"></i> Total Sent</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num green" id="successCount">0</div>
+        <div class="stat-lbl"><i class="ti ti-circle-check"></i> Success</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num red" id="failCount">0</div>
+        <div class="stat-lbl"><i class="ti ti-alert-circle"></i> Failed</div>
+      </div>
+    </div>
+
+    <div class="card" id="historyCard" style="display:none;">
+      <div class="history-header">
+        <span><i class="ti ti-history"></i> Recent Activity</span>
+        <button class="clear-btn" onclick="clearHistory()">Clear all</button>
+      </div>
+      <div id="historyList"></div>
+    </div>
+
+    <footer>
+      Powered by <strong>Obsidian Hosting</strong> &nbsp;·&nbsp; API: <code>/api/free/add_uid</code>
+    </footer>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
